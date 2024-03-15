@@ -1,0 +1,88 @@
+.button {
+          background-color: #4CAF50; /* 绿色 */
+          border: none;
+          color: white;
+          padding: 15px 64px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+          width: 250px;
+        }
+        
+        .button2 {background-color: #008CBA;} /* 蓝色 */
+        .button3 {background-color: #f44336;} /* 黑色 */ 
+        .button4 {background-color: #e7e7e7; color: black;} /* 灰色 */ 
+        .button5 {background-color: #555555;} /* 黑色 */
+
+
+
+
+/* 借鉴lchzh的css */
+
+
+:root {
+  --select-bg: rgba(147, 107, 255, 0.286);
+  --hover-bg: rgba(60, 251, 76, 0.286);
+  --active-bg: rgba(25, 240, 43, 0.427);
+  --link-color: #f00;
+  --link-bg: #37723a;
+  --button-bg: #4ca951;
+  --button-hover-bg: #57d15d;
+  --button-active-bg: #37723a;
+}
+
+/* [theme="dark"] {
+  --select-color: rgba(255, 107, 147, 0.286);
+} */
+::selection {
+  background-color: var(--select-bg);
+}
+
+::-moz-selection {
+  background-color: var(--select-bg);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+@supports (scrollbar-width: none) {
+  * {
+    /* Firefox */
+    scrollbar-width: none;
+  }
+}
+
+:root,
+input,
+select,
+button {
+  font-family: Noto Sans SC;
+  line-height: 1.2;
+}
+
+body {
+  margin: 0;
+  text-align: center;
+  background-color: #f1eff6;
+}
+
+a {
+  text-decoration: none;
+  color: var(--link-color);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+a:hover,
+input[type='checkbox'] + label:hover,
+input[type='radio'] + label:hover {
+  background-color: var(--hover-bg);
+}
+
+a:active {
+  background-color: var(--active-bg);
+}
