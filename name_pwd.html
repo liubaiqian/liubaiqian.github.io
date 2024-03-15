@@ -5,8 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>liubaiqian.github.io-验证您的身份</title>
     <link href="./style.css" rel="stylesheet" />
+    <script>
+        function yes(){
+            var userinput = promit('验证');
+            if (userinput = "YES"){
+                alert("验证完成，为您重定向");
+                window.location.href="./name.html"
+            }
+            else{
+                alert("错误");
+                window.location.href="./yl.html"
+            }
+        
+        }
+        
+        
+    </script>
 </head>
 <body>
     请注意，不要使用此页面生成的名字最为username，昵称，游戏名，此页面仅供娱乐与技术研究
     <br>如您自愿承担风险并希望继续，请点击下方按钮并在提示框内输入YES（大写）
     <br>完成后将为您重定向
+    <button onclick="yes()">已阅读并同意用户协议</button>
+</body>
