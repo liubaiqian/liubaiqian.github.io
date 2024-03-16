@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+    <meta charset ="utf-8">
+    <head>
+        <link rel="icon" href="./favico.ico">
+        <title>名字生成器</title>
+        <style>
+            .title {
+                
+                color: chocolate;
+                font-size: 100px;
+                text-align: center ;
+            }
+            .shengming {
+                color: cadetblue;
+                font-size: 10px;
+
+            }
+        </style>
+        <link href="./style.css" rel="stylesheet" />
+    </head>
+    <body>
+        <marquee bgcolor="red">禁止使用此网站生成游戏名</marquee>
+        <h1 class="title">名字生成器<h1>
+            
+       
+    
+<button onclick="sc()">生成名字</button>
+<script>
+    function sc(){
+        var name_adjboy=["勇敢的","厉害的","帅气的","狂笑的","开心的","自由的","快乐的","无奈的","失落的","苦恼的"];
+        var name_adjgirl=["美丽的","漂亮的","开心的","自由的","快乐的","无奈的","失落的","苦恼的","文静的","活泼的"];
+        var name_nboy=["张航翼","刘柏谦","康桓与","姜元智","曹继航","安泊宇","马汇成","隋延豪","杨岳霖","明冠伯","高家豪","马连浩宇"];
+        var name_ngirl=["栾弈涵","高诗诒","于思佳","刘奕灿","何孟轩","郭恩贝","顾芳菲","王睿涵","倪雲璦","金婉芷晴","于凡淇","孙晓宇","王蕊蕊","刘艺韵","王依然","孙盛书绮","邵佳慧","关智丹","张佳琦","李彦凝","李诺涵","陈品妃",,"孙铭贺","闫艾倪","杨梦琪","李潇悦","胶诗诒"]
+        var name_v=["挖矿","喝水","打pvp","玩游戏","写代码","进行city walk","写作业","上课","捣乱","玩元梦","玩mc","玩原神","写全程","出去玩","在唱跳rap篮球"];
+        var rd = Math.ceil(Math.random() * 10);
+        var rq = Math.ceil(Math.random() * 10);
+        var name = name_adjboy[rd - 1];
+        var name = name_adjgirl[rq - 1];
+        var ra = Math.ceil(Math.random() * 12);
+        var rn = Math.ceil(Math.random() * 27);
+        var name = name_adjboy[rd-1] + name_nboy[ra - 1]+"和"+name_adjgirl[rq-1]+name_ngirl[rn - 1];
+        var rd = Math.ceil(Math.random() * 15);
+        var name = name + name_v[rd - 1];
+        alert(name)
+        
+    }
+
+        
+
+</script>
+
+
+
+<div>
+<p class="shengming">数据更新来自MGB</p>
+</div>
+<fieldset>
+    <legend >广告</legend>
+        我们之前的网站：<form action="https://3wdjyecom.github.io/" target="_blank">
+        <button>转到这里</button>
+    </form>
+</fieldset>
+</body>
+</html>
