@@ -8,7 +8,9 @@
     <script>
         function yes(){
             var userinput = prompt("验证");
-            if (userinput = "YES"){
+            if (userinput !=null){
+            if (userinput !=""){
+            if (userinput == "YES"){
                 alert("验证完成，为您重定向");
                 window.location.href="./name.html"
             }
@@ -16,14 +18,15 @@
                 alert("错误");
                 window.location.href="./yl.html"
             }
-        
+            }
+        }
         }
         
         
     </script>
 </head>
 <body>
-    请注意，不要使用此页面生成的名字作为username，昵称，游戏名，此页面仅供娱乐与技术研究
+    请注意，不要使用此页面生成的名字作为username，昵称，游戏名，此页面仅供技术研究
     <br>如您自愿承担风险并希望继续，请点击下方按钮并在提示框内输入YES（大写）
     <br>完成后将为您重定向
     <button onclick="yes()">已阅读并同意用户协议</button>
