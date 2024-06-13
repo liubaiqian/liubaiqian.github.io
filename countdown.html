@@ -1,0 +1,92 @@
+  
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=320, initial-scale=1">
+    <meta charset="utf-8">
+    <style>
+            body, html {
+        min-width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        font: Arial 14px;
+      }
+      @keyframes color-change {
+     0% {color: red;}
+     50% {color: green;}
+     100% {color: red;}
+}
+        h1 {
+      animation-name: color-change;
+      animation-duration: 5s;
+      animation-iteration-count: infinite;
+}
+      p {
+      animation-name: color-change;
+      animation-duration: 10s;
+      animation-iteration-count: infinite;
+      line-height: 0.4
+}
+  h2 {
+      animation-name: color-change;
+      animation-duration: 20s;
+      animation-iteration-count: infinite;
+}
+  h1 {
+    text-align: center;
+}
+  h2 {
+    text-align: center;
+}
+ .box    {
+    position: fixed;
+    width: 540px;
+    margin: 0 auto;
+    left: 50%;
+    top: 20%;
+    transform: translateX(-50%);  //关键
+}
+
+
+    </style>
+    <!--<link rel="stylesheet" href="style.css"/>-->
+    <!--<script defer src="script.js"></script>-->
+
+  </head>
+  <body>
+    <h1>喜报</h1>
+     <div class="box" style="width: 400px; height: 80px; background-color: #fff100; border: 1px solid #000; border-radius: 10px;">
+      地生中考还有：
+       <h2 id="data"></h2>
+       <br>
+       <br> 
+       
+    </div>
+    <script>
+      var data = "2023-06-23";
+      var countdownElement = document.getElementById("data");
+            var countdownDate = 1719072000000
+            var x = setInterval(function () {
+                var now = new Date().getTime();
+//alert(now);调试内容，请忽略
+                var distance = countdownDate - now;
+//alert(distance);调试内容，请忽略
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+ var ms = Math.floor((distance % (1000)));
+                countdownElement.innerHTML = "\n\n\n" + days + " 天 " + hours + " 小 "
+                    + minutes + " 分 " + seconds + " 秒 " + ms + "毫秒";
+ 
+                if (distance < 0) {
+                    clearInterval(x);
+                    countdownElement.innerHTML = "就是今天！";
+                    countdownElement.style.color = "#000";
+                }
+            }, 0);
+      
+    </script>
+  </body>
+</html>
