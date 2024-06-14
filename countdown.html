@@ -77,7 +77,7 @@
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
  var ms = Math.floor((distance % (1000)));
-                countdownElement.innerHTML = "\n\n\n" + days + " 天 " + hours + " 小 "
+                countdownElement.innerHTML = "\n\n\n" + days + " 天 " + hours + " 时 "
                     + minutes + " 分 " + seconds + " 秒 " + ms + "毫秒";
  
                 if (distance < 0) {
