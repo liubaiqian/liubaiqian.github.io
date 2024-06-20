@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+<body>
+    <header>
+        <ul>
+        <li><a href="./index.html">返回主页</a></li>
+        <li><a href="./download.html">进入下载站</a></li>
+        </ul>
+    <h1>搜索</h1>
+    <nav><main>
+    </nav></header>
+    <img src="./icon.png" width="90" height="50"><input type="text" name="text" id="text"/><button onclick="go()">go</button>
+    </main>
+    <script>
+        function go(){
+            var em = document.getElementById("text").value;
+            window.location.replace("https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=" + em + "&fenlei=256&rsv_pq=0xbc5f8348000a8183&rsv_t=8cd8RIAdNPHGpCuKDKjjwYwAes6sHsRYzHLusk%2BXWbIMz9mRAPUZ4IvUrNzD&rqlang=en&rsv_enter=1&rsv_dl=tb&rsv_sug3=5&rsv_sug1=4&rsv_sug7=100&rsv_sug2=0&rsv_btype=i&prefixsug=test&rsp=6&inputT=1477&rsv_sug4=2352");
+        }
+    </script>
+    <footer>
+        <p>Copyright © 2024 Breader Studio|All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
