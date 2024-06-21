@@ -64,6 +64,23 @@ button {
 button:focus {
     outline: none;
 }
+.input {
+    height: 10vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #231C1A;
+    background-color: rgb(193, 248, 43);
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+footer {
+    position: absolute;
+    bottom: 0; /* 4. 设置页脚position为absolute之后，再将其bottom值设为0，即可使其处于页面的底部 */
+    width: 100%;
+    background-color: #457B9D;
+}
 
 * {
     padding: 0;
