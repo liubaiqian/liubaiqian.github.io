@@ -21,20 +21,20 @@
     <button class="qwqa" onclick="qwqa()">⟳</button><button class="qwq" onclick="qwq()">⟳</button><img class="baidu" src="./icon_baidu.png" width="90" height="50"><img class="bing" src="./icon_bing.jpg" width="90" height="50"><input type="text" name="text" id="text"/><button onclick="go()">go</button>
     </div>
     <script>
-                var qwq = "baidu";
+        var qwqaa = "baidu";
         $(".bing").hide();
         $(".qwqa").hide();
     </script>
     <script>
         function qwq() {
-            var qwq = "bing"
+            qwqaa = "bing"
             $(".bing").show();
             $(".baidu").hide();
             $(".qwqa").show();
             $(".qwq").hide();
         }
         function qwqa() {
-            var qwq = "baidu"
+            qwqaa = "baidu"
             $(".baidu").show();
             $(".bing").hide();
             $(".qwq").show();
@@ -42,9 +42,11 @@
         }
         function go(){
             var em = document.getElementById("text").value;
-            if (qwq == "baidu") {
+            //alert(qwqaa);
+            if (qwqaa == "baidu") {
                 window.location.replace("https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=" + em + "&fenlei=256&rsv_pq=0xbc5f8348000a8183&rsv_t=8cd8RIAdNPHGpCuKDKjjwYwAes6sHsRYzHLusk%2BXWbIMz9mRAPUZ4IvUrNzD&rqlang=en&rsv_enter=1&rsv_dl=tb&rsv_sug3=5&rsv_sug1=4&rsv_sug7=100&rsv_sug2=0&rsv_btype=i&prefixsug=test&rsp=6&inputT=1477&rsv_sug4=2352");
-            } else {
+            } 
+            if (qwqaa == "bing") {
                 window.location.replace("https://cn.bing.com/search?pglt=43&q=" + em + "&cvid=786957da32f74a85b4eec18f67bd62a6&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQABhAMgYIAhAAGEAyBggDEAAYQDIGCAQQABhAMgYIBRAAGEAyBggGEAAYQDIGCAcQABhAMgYICBAAGEDSAQgxODMxajBqMagCALACAA&FORM=ANSPA1&PC=CNNDDB");
             }
             
