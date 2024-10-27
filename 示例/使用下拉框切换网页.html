@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用下拉框切换网页</title>
+</head>
+<body>
+    <select id="select">
+        <option>http://3wdjyecom.github.io</option>
+        <option>https://www.runoob.com</option>
+    </select>
+    <button onclick="go()">前往</button>
+    <iframe id="iframe" width="640" height="480" src="1"></iframe>
+    <script>
+        function go(){
+            var select;
+            var selected;
+            var iframe;
+            var src;
+            select = document.getElementById("select");
+            selected = select.selectedIndex;
+            //alert(select.options[selected].value); 
+            iframe = document.getElementById("iframe");
+            iframe.src = select.options[selected].value;
+        }
+    </script>
+</body>
+</html>

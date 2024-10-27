@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phi</title>
+    <script src="./script.js"></script>
+</head>
+<body>
+    <canvas id="canvas" width="1600" height="900"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+    </script>
+    <button onclick="reset()">绘制显示区域</button>
+    <button onclick="start()">开始</button>
+    <button onclick="test()">debug</button>
+    <h6 id="debug"></p>
+    <h6 id="debugthis"></p>
+    <input type="file" name="inputFile" id="inputFile">
+        <script type="text/javascript">
+          var debugText = document.getElementById("debug");
+          var debugthisText = document.getElementById("debugthis");
+        document.getElementById('inputFile').addEventListener('change', function() {
+          var file = new FileReader();
+          file.onload = () => {
+            //alert(file.result);
+            var chartfile = file.result;
+            obj = JSON.parse(chartfile);
+          }
+          file.readAsText(this.files[0]);
+        });
+        </script>
+        
+</body>
+</html>
