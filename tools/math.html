@@ -9,8 +9,7 @@
 </head>
 <body>
     <h1>全自动生成小学计算题</h1><br>
-    <div id="show"></div>
-    <button onclick="show()">显示</button>
+    <p>By FH3718,制作于2025.2.11，最后更新于2025.2.13<br>作者被物理老师罚写小学计算后制作</p>
     <br>输入你想要的题目数量<input type="text" id="count">
     <br>输入最大数字<input type="text" id="maxnumber">
     <select name="select" id="s">
@@ -21,7 +20,8 @@
         <option value="÷">÷</option>
         <option value="4">四则混合</option>
     </select>
-
+    <button onclick="show()">显示</button>
+    <div id="show"></div>
 
 
     <script>
@@ -36,14 +36,20 @@
             var index = s.selectedIndex;
             var value = s.options[index].value;
             docu.innerHTML = " ";
-            for (let i = 1; i <= count; i++) { //维护请注意！这里的count是字符串，别搁后面直接“+”
+            //alert(value);
+            if (value == "") {
+                docu.innerHTML = "错误：未选择运算法则";
+            } else {
+                for (let i = 1; i <= count; i++) { //维护请注意！这里的count是字符串，别搁后面直接“+”
                 if (value == "4") {
                     docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + randomMath(max) + f[randomMath(4)] + randomMath(max) + "=";
-                } else{
+                    } else{
                     docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + randomMath(max) + value + randomMath(max) + "=";
-                }
+                    }
                 
+                }
             }
+            
              
         } 
     </script>
