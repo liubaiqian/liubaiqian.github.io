@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>~</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="../EasyJS.js"></script><!--Easy JS V0.1 By FH3718-->
+</head>
+<body>
+    <h1>全自动生成小学计算题</h1><br>
+    <div id="show"></div>
+    <button onclick="show()">显示</button>
+    <br>输入你想要的题目数量<input type="text" id="count">
+    <br>输入最大数字<input type="text" id="maxnumber">
+    <select name="select" id="s">
+        <option value="">请选择运算法则</option>
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="×">×</option>
+        <option value="÷">÷</option>
+        <option value="4">四则混合</option>
+    </select>
+
+
+
+    <script>
+        var f = ["+","+","-","×","÷"]; //多一个+用来应对随机数小概率取0
+        function show(){
+            var count = docuGetById("count");
+            var max = docuGetById("maxnumber");
+            max = max.value;
+            count = count.value; 
+            var docu = docuGetById("show");
+            var s = docuGetById("s");
+            var index = s.selectedIndex;
+            var value = s.options[index].value;
+            docu.innerHTML = " ";
+            for (let i = 1; i <= count; i++) { //维护请注意！这里的count是字符串，别搁后面直接“+”
+                if (value == "4") {
+                    docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + randomMath(max) + f[randomMath(4)] + randomMath(max) + "=";
+                } else{
+                    docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + randomMath(max) + value + randomMath(max) + "=";
+                }
+                
+            }
+             
+        } 
+    </script>
+</body>
+</html>
