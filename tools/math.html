@@ -20,15 +20,46 @@
         <option value="÷">÷</option>
         <option value="4">四则混合</option>
     </select>
-    <button onclick="show()">显示</button>
+    <button onclick="show()">显示</button><input type="checkbox" id="check">显示计算结果</input>
     <div id="show"></div>
 
 
     <script>
         var f = ["+","+","-","×","÷"]; //多一个+用来应对随机数小概率取0
+        function calculateExpression(str) {
+  // 使用正则表达式匹配格式：数字 运算符 数字 =
+  const pattern = /^(\d+)([+\-×÷])(\d+)=$/;
+  const matches = str.match(pattern);
+
+  if (!matches) return str; // 格式不符时返回原字符串
+
+  const num1 = parseFloat(matches[1]);
+  const operator = matches[2];
+  const num2 = parseFloat(matches[3]);
+
+  let result;
+  switch (operator) {
+    case '+':
+      result = num1 + num2;
+      break;
+    case '-':
+      result = num1 - num2;
+      break;
+    case '×':
+      result = num1 * num2;
+      break;
+    case '÷':
+      result = num1 / num2;
+      break;
+    default:
+      return str; // 无效运算符
+  }
+  return str + result;
+}
         function show(){
             var count = docuGetById("count");
             var max = docuGetById("maxnumber");
+            var checkbox = docuGetById("check");
             max = max.value;
             count = count.value; 
             var docu = docuGetById("show");
@@ -36,18 +67,29 @@
             var index = s.selectedIndex;
             var value = s.options[index].value;
             docu.innerHTML = " ";
-            //alert(value);
             if (value == "") {
                 docu.innerHTML = "错误：未选择运算法则";
             } else {
                 for (let i = 1; i <= count; i++) { //维护请注意！这里的count是字符串，别搁后面直接“+”
-                if (value == "4") {
-                    docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + randomMath(max) + f[randomMath(4)] + randomMath(max) + "=";
-                    } else{
-                    docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + randomMath(max) + value + randomMath(max) + "=";
+                    if (value == "4") {
+                    
+                    if (checkbox.checked) {
+                        docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + calculateExpression(randomMath(max) + f[randomMath(4)] + randomMath(max) + "=");
+                } else {
+                        docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + randomMath(max) + f[randomMath(4)] + randomMath(max) + "=";
+                }
+                        } else{
+                            if (checkbox.checked) {
+                    docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + calculateExpression(randomMath(max) + value + randomMath(max) + "=");
+                } 
+                    else{
+                        docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + randomMath(max) + value + randomMath(max) + "=";
+                    }
+                        }
+                
                     }
                 
-                }
+                
             }
             
              
