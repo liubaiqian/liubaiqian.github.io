@@ -9,18 +9,19 @@
 </head>
 <body>
     <h1>全自动生成小学计算题</h1><br>
-    <p>By FH3718,制作于2025.2.11，最后更新于2025.2.13<br>作者被物理老师罚写小学计算后制作</p>
-    <br>输入你想要的题目数量<input type="text" id="count">
-    <br>输入最大数字<input type="text" id="maxnumber">
+    <p>By FH3718,制作于2025.2.11，最后更新于2025.2.13<br>作者被物理老师罚写小学计算后制作<br>如您需要打印，请使用<a href="https://3wdjyecom.github.io/timetoexam/%E8%AE%A1%E7%AE%97%E9%A2%98%E7%94%9F%E6%88%90%E5%99%A8.html">计算题生成器</a> By Breader</p>
+    <br>输入你想要的题目数量<input type="text" id="count" value="100">
+    <br>输入最大数字<input type="text" id="maxnumber" value="100">
+    <br>行间距：<input type="range" value="1" max="5" min="1" id="range">
     <select name="select" id="s">
         <option value="">请选择运算法则</option>
         <option value="+">+</option>
         <option value="-">-</option>
         <option value="×">×</option>
         <option value="÷">÷</option>
-        <option value="4">四则混合</option>
+        <option value="4">四则混合</option><br>
     </select>
-    <button onclick="show()">显示</button><input type="checkbox" id="check">显示计算结果</input>
+    <button onclick="show()">生成</button><input type="checkbox" id="check">显示答案</input>
     <div id="show"></div>
 
 
@@ -56,6 +57,13 @@
   }
   return str + result;
 }
+    function lineBr(number){
+        var ii = "<br>";
+        for (let i = 0; i < number; i++) {
+            var ii = ii + "<br>";
+        }
+        return ii;
+    }
         function show(){
             var count = docuGetById("count");
             var max = docuGetById("maxnumber");
@@ -64,6 +72,7 @@
             count = count.value; 
             var docu = docuGetById("show");
             var s = docuGetById("s");
+            var range = docuGetById("range");
             var index = s.selectedIndex;
             var value = s.options[index].value;
             docu.innerHTML = " ";
@@ -74,25 +83,20 @@
                     if (value == "4") {
                     
                     if (checkbox.checked) {
-                        docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + calculateExpression(randomMath(max) + f[randomMath(4)] + randomMath(max) + "=");
+                        docu.innerHTML = docu.innerHTML + lineBr(range.value) + i + "、" + calculateExpression(randomMath(max) + f[randomMath(4)] + randomMath(max) + "=");
                 } else {
-                        docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + randomMath(max) + f[randomMath(4)] + randomMath(max) + "=";
+                        docu.innerHTML = docu.innerHTML + lineBr(range.value) + i + "、" + randomMath(max) + f[randomMath(4)] + randomMath(max) + "=";
                 }
                         } else{
                             if (checkbox.checked) {
-                    docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + calculateExpression(randomMath(max) + value + randomMath(max) + "=");
+                    docu.innerHTML = docu.innerHTML + lineBr(range.value) + i + "、" + calculateExpression(randomMath(max) + value + randomMath(max) + "=");
                 } 
                     else{
-                        docu.innerHTML = docu.innerHTML + "<br>" + i + "、" + randomMath(max) + value + randomMath(max) + "=";
+                        docu.innerHTML = docu.innerHTML + lineBr(range.value) + i + "、" + randomMath(max) + value + randomMath(max) + "=";
                     }
                         }
-                
-                    }
-                
-                
-            }
-            
-             
+                    } 
+            }    
         } 
     </script>
 </body>
