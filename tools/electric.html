@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>~</title>
+    <script src="../EasyJS.js"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <h1>简易电费计算器</h1><br>
+    <p>By FH3718,制作于2025.2.14</p><br>
+    输入当前电器功率（w/瓦）<input type="text" value="100" id="power"></input><br>
+    输入每天使用时间（h/小时）<input type="text" value="24" id="time"></input><br>
+    输入电价（元/kW·h）<input type="text" value="0.5" id="prize"></input><br>
+    <button onclick="show()">计算!</button><br>
+    <div id="display"></div>
+    <script>
+        function show(){
+            var power = docuGetById("power");
+            var time = docuGetById("time");
+            var prize = docuGetById("prize");
+            var display = docuGetById("display");
+            power = power.value / 1000;
+            time = time.value;
+            prize = prize.value;
+            display.innerHTML = "三十天电费为" + power * time * prize * 30 + "元"
+        }
+    </script>
+</body>
+</html>
