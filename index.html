@@ -94,22 +94,26 @@ input[type='radio'] + label:hover {
 a:active {
   background-color: var(--active-bg);
 }
+.butt {
+  position: absolute;
+  height: 375px;
+  width: 275px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.5);
+  border: 3px solid green;
+  transform: translateY(25%);
+  left: 40%;
+}
         </style>
 </head>
 <body>
-  debug menu:<button onclick="document.body.style.filter = 'blur(5px)'">模糊效果</button><button onclick="document.body.style.filter = 'brightness(0.5)'">降低亮度</button><button onclick="document.body.style.filter = 'contrast(200%)'">增加对比度</button><button onclick="document.body.style.filter = 'hue-rotate(90deg)'">色调变换</button><button onclick="document.body.style.filter = 'saturate(50%)'">降低饱和度</button><button onclick="document.body.style.filter = 'opacity(0.5)'">透明度调整</button><button onclick="document.body.style.filter = 'none'">重置</button><br>
+  <div class="butt">
     <a href="./zp.html"><button class="button">图片</button><br></a>
     <a href="./sp.html"><button class="button button2">老旧视频补档</button><br></a>
     <a href="./wz.html"><button class="button button3">文章</button><br></a>
     <a href="./search.html"><button class="button button6">搜索页</button><br></a>
     <a href="./yl.html"><button class="button button4">友情链接</button><br></a>
     <a href="https://github.com/liubaiqian/liubaiqian.github.io"><button class="button button5">Github<br>（求star）</button></a>
-</fieldset>
-<fieldset>
-    <legend >广告</legend>
-        我们之前的网站：<form action="https://3wdjyecom.github.io/" target="_blank">
-        <button>转到这里</button>
-    </form>
-</fieldset>
+  </div>
 </body>
 </html>
