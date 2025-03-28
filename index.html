@@ -101,7 +101,7 @@ a:active {
   height: 375px;
   width: 275px;
   left: 50%;
-  top: 50%;
+  top: 55%;
   margin: auto;
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.2); 
@@ -111,9 +111,25 @@ a:active {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
+.top {
+position: absolute;
+height: 125px;
+width: 100%;
+background-color: #4e504dab;
+text-align: left;
+color: white;
+font: 1em sans-serif;
+-webkit-backdrop-filter: blur(10px);
+backdrop-filter: blur(10px);
+}
+#countdown {
+  color: #4ca951;
+  font-size: large;
+}
         </style>
 </head>
 <body>
+  <div class="top"><h2>FH3718的小站</h2><div id="countdown"></div></div>
   <div class="butt">
     <a href="./zp.html"><button class="button">图片</button><br></a>
     <a href="./sp.html"><button class="button button2">老旧视频补档</button><br></a>
@@ -122,5 +138,14 @@ a:active {
     <a href="./yl.html"><button class="button button4">友情链接</button><br></a>
     <a href="https://github.com/liubaiqian/liubaiqian.github.io"><button class="button button5">Github<br>（求star）</button></a>
   </div>
+  <script>
+    var element = document.getElementById("countdown");
+    var ctDate = 1750515142000;
+    var forever = setInterval(() => {
+      var left = ctDate - new Date().getTime();
+      element.innerHTML = "<b>距离中考还有</b>" + Math.floor(left / (1000 * 60 * 60 * 24)) + "<b>天</b>" + Math.floor((left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + "<b>小时</b>" + Math.floor((left % (1000 * 60 * 60)) / (1000 * 60)) + "<b>分钟</b>" + Math.floor((left % (1000 * 60)) / 1000) + "<b>秒</b>";
+
+    }, 500);
+  </script>
 </body>
 </html>
