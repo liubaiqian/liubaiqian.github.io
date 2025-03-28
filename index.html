@@ -98,7 +98,7 @@ a:active {
 }
 .butt {
   position: absolute;
-  height: 375px;
+  height: 400px;
   width: 275px;
   left: 50%;
   top: 55%;
@@ -126,11 +126,15 @@ backdrop-filter: blur(10px);
   color: #4ca951;
   font-size: large;
 }
+#data {
+  color: rgba(128, 255, 0, 0.541);
+}
         </style>
 </head>
 <body>
   <div class="top"><h2>FH3718的小站</h2><div id="countdown"></div></div>
   <div class="butt">
+     <p id="data"></p>
     <a href="./zp.html"><button class="button">图片</button><br></a>
     <a href="./sp.html"><button class="button button2">老旧视频补档</button><br></a>
     <a href="./wz.html"><button class="button button3">文章</button><br></a>
@@ -141,10 +145,11 @@ backdrop-filter: blur(10px);
   <script>
     var element = document.getElementById("countdown");
     var ctDate = 1750515142000;
+    var d = document.getElementById("data");
     var forever = setInterval(() => {
       var left = ctDate - new Date().getTime();
       element.innerHTML = "<b>距离中考还有</b>" + Math.floor(left / (1000 * 60 * 60 * 24)) + "<b>天</b>" + Math.floor((left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + "<b>小时</b>" + Math.floor((left % (1000 * 60 * 60)) / (1000 * 60)) + "<b>分钟</b>" + Math.floor((left % (1000 * 60)) / 1000) + "<b>秒</b>";
-
+      d.innerHTML = new Date();
     }, 500);
   </script>
 </body>
