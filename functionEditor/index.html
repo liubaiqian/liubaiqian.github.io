@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数画板</title>
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <h1>函数画板</h1><br>
+    <p>By FH3718，制作于2025.4.9，最后更新于2025.4.9</p><br><p>本项目未使用任何AI工具</p> <br>
+    <p>使用说明（仅支持PC端或可使用终端的浏览器）：右击，选择“检查”，点击“控制台”选项卡，光标移动到输入框处输入指令</p><br>
+    <p>一次函数（y=kx+b）： yicihanshu(k,b)<br>二次函数（y=ax^2+bx+c）：ercihanshu(a,b,c)<br>反比例（y=k/x）：fanbilihanshu(k)<br>单点：drawpoint(x,y)<br>如需单独绘制坐标系 请点击下方按钮</p><br>
+    <canvas id="canvas" width="1600" height="900"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+    </script>
+    <button onclick="draw()">画框</button>
+</body>
+</html>
