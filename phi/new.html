@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #1a1a1a;
+        }
+        #gameCanvas {
+            width: 1600px;
+            height: 900px;
+            background: #000;
+            margin-top: 20px;
+        }
+        .controls {
+            margin: 20px;
+            display: flex;
+            gap: 15px;
+        }
+        button, input {
+            padding: 8px 15px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <input type="file" id="fileInput" accept=".json">
+        <button id="playButton">播放</button>
+    </div>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let judgeLines = [];
+        let isPlaying = false;
+        let startTime = 0;
+        const NOTE_WIDTH = 90;
+        const BASE_NOTE_HEIGHT = 20;
+
+        // 音效系统
+        const sounds = {
+            tap: new Audio('sound/Tap.wav'),
+            drag: new Audio('sound/Drag.wav'),
+            flick: new Audio('sound/Flick.wav')
+        };
+
+        class JudgeLine {
+            constructor(data) {
+                this.bpm = data.bpm;
+                this.notes = [];
+                this.moveEvents = data.judgeLineMoveEvents || [];
+                this.currentState = {
+                    x: 0.5,  // 默认居中
+                    y: 0.5,  // 默认垂直居中
+                    rotation: 0
+                };
+
+                // 加载音符
+                this._loadNotes(data.notesAbove, data.notesBelow);
+                this._preprocessEvents();
+            }
+
+            _loadNotes(notesAbove = [], notesBelow = []) {
+                const timeUnit = (60 / this.bpm) / 32;
+                const process = arr => arr.forEach(note => {
+                    if (![1, 2, 3, 4].includes(note.type)) return;
+                    
+                    this.notes.push({
+                        type: note.type,
+                        startTime: note.time * timeUnit,
+                        endTime: (note.time + (note.holdTime || 0)) * timeUnit,
+                        positionX: note.positionX,
+                        isHidden: false,
+                        hasPlayedSound: false,
+                        color: this._getNoteColor(note.type),
+                        holdTime: note.type === 3 ? note.holdTime * timeUnit : 0
+                    });
+                });
+                
+                process(notesAbove);
+                process(notesBelow);
+                this.notes.sort((a, b) => a.startTime - b.startTime);
+            }
+
+            _preprocessEvents() {
+                const timeUnit = (60 / this.bpm) / 32;
+                this.moveEvents.forEach(e => {
+                    e.startSec = e.startTime * timeUnit;
+                    e.endSec = e.endTime * timeUnit;
+                });
+            }
+
+            _getNoteColor(type) {
+                return ['#00f', '#ff0', '#00f', '#f00'][type - 1] || '#000';
+            }
+
+            update(currentTime) {
+                this._updatePosition(currentTime);
+            }
+
+            _updatePosition(currentTime) {
+                for (const event of this.moveEvents) {
+                    if (currentTime >= event.startSec && currentTime <= event.endSec) {
+                        const progress = (currentTime - event.startSec) / (event.endSec - event.startSec);
+                        this.currentState.x = event.start + (event.end - event.start) * progress;
+                        this.currentState.y = event.start2 + (event.end2 - event.start2) * progress;
+                        break;
+                    }
+                }
+            }
+
+            getPosition() {
+                return {
+                    x: (this.currentState.x - 0.5) * canvas.width,
+                    y: (this.currentState.y - 0.5) * canvas.height
+                };
+            }
+        }
+
+        // 文件读取
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const json = JSON.parse(e.target.result);
+                    if (json.formatVersion !== 3) return alert('仅支持版本3谱面');
+                    
+                    judgeLines = json.judgeLineList.map(line => new JudgeLine(line));
+                    console.log('谱面加载完成');
+                } catch(err) {
+                    alert('解析失败：' + err.message);
+                }
+            };
+            reader.readAsText(file);
+        });
+
+        // 动画循环
+        function animate() {
+            if (!isPlaying) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const currentTime = (Date.now() - startTime) / 1000;
+
+            judgeLines.forEach(line => {
+                line.update(currentTime);
+                const pos = line.getPosition();
+
+                // 绘制判定线
+                ctx.strokeStyle = '#FFD700';
+                ctx.lineWidth = 15;
+                ctx.beginPath();
+                ctx.moveTo(pos.x - 1000, pos.y);
+                ctx.lineTo(pos.x + 1000, pos.y);
+                ctx.stroke();
+
+                // 绘制音符
+                line.notes.forEach(note => {
+                    if (note.isHidden) return;
+
+                    // 时间计算
+                    const startDiff = note.startTime - currentTime;
+                    const endDiff = note.endTime - currentTime;
+
+                    // 音效触发
+                    if (startDiff <= 0 && !note.hasPlayedSound) {
+                        playSound(note.type);
+                        note.hasPlayedSound = true;
+                    }
+
+                    // 隐藏过期音符
+                    if (endDiff <= 0) {
+                        note.isHidden = true;
+                        return;
+                    }
+
+                    // 位置计算
+                    const speed = canvas.height / 2;
+                    const x = pos.x + note.positionX * 0.05625 * canvas.width;
+                    const y = pos.y - startDiff * speed;
+
+                    // 长按处理
+                    if (note.type === 3) {
+                        const holdHeight = (note.endTime - currentTime) * speed;
+                        ctx.fillStyle = note.color;
+                        ctx.fillRect(x - NOTE_WIDTH/2, y - holdHeight, NOTE_WIDTH, holdHeight);
+                    } else {
+                        ctx.fillStyle = note.color;
+                        ctx.fillRect(x - NOTE_WIDTH/2, y - BASE_NOTE_HEIGHT/2, NOTE_WIDTH, BASE_NOTE_HEIGHT);
+                    }
+                });
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        function playSound(type) {
+            const sound = sounds[['tap', 'drag', 'tap', 'flick'][type - 1]];
+            if (sound) {
+                sound.currentTime = 0;
+                sound.play().catch(e => console.log('音效播放失败'));
+            }
+        }
+
+        document.getElementById('playButton').addEventListener('click', () => {
+            if (!judgeLines.length) return alert('请先上传谱面');
+            isPlaying = true;
+            startTime = Date.now();
+            animate();
+        });
+
+        // 初始化画布
+        canvas.width = 1600;
+        canvas.height = 900;
+    </script>
+</body>
+</html>
