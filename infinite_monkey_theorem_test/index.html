@@ -29,7 +29,10 @@
         var interval = setInterval(() => {
             for (let i = 0; i < targetLength; i++) {
                 var randomIndex = Math.floor(Math.random() * letter.length);
-                test = test + letter[randomIndex];
+                if (randomIndex === 0) {
+                    randomIndex = 1;
+                }
+                test = test + letter[randomIndex -1];
             }
             if (test === target) {
                 clearInterval(interval);
