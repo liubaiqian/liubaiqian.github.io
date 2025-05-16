@@ -16,11 +16,15 @@
         <p>为了防止你的电脑爆炸 我们只考虑了小写英文字母</p>
         <input type="text" id="string" placeholder="请输入目标字符串">
         <button onclick="start()">开始运行程序</button>
+        <button onclick="fastfind()">快速运行程序</button>
+        <div id="probability"></div>
         <div id="result"></div>
-        <p>注意：这个程序是一个模拟程序，实际上猴子打出特定字符串的概率是非常小的，因此请不要期望它能在短时间内完成。</p>
+        <p>注意：这个程序是一个模拟程序，实际上猴子打出特定字符串的概率是非常小的，因此请不要期望它能在短时间内完成。<br>使用快速运行你将无法看到过程 但这会使运算速度快几万倍</p>
         <script>
     var letter = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    
     function start() {
+        showprobability();
         var target = document.getElementById("string").value;
         var targetLength = target.length;
         var testcount = 0;
@@ -44,6 +48,49 @@
             }
         }, 0);
     }
+    function fastfind(){
+        showprobability();
+        var found = "0"
+        var target = document.getElementById("string").value;
+        var targetLength = target.length;
+        var testcount = 0;
+        var test = "";
+        var resultDiv = document.getElementById("result");
+        while (found === "0") {
+            for (let i = 0; i < targetLength; i++) {
+                var randomIndex = Math.floor(Math.random() * letter.length);
+                if (randomIndex === 0) {
+                    randomIndex = 1;
+                }
+                test = test + letter[randomIndex -1];
+            }
+            if (test === target) {
+                found = "1"
+                resultDiv.innerHTML = "猴子在" + testcount + "次尝试后成功打出了目标字符串：" + target;
+            } else {
+                testcount++;
+                found = "0"
+                test = "";
+            }
+        }
+    }
+    function showprobability() {
+    var target = document.getElementById("string").value;
+    var targetLength = target.length;
+    var probability = Math.pow(1 / letter.length, targetLength);
+    var probabilityDiv = document.getElementById("probability");
+    var percentage;
+
+    if (targetLength > 15) {
+        percentage = (probability * 100).toFixed(30); // 保留 30 位小数
+    } else if (targetLength > 8) {
+        percentage = (probability * 100).toFixed(20); // 保留 20 位小数
+    } else {
+        percentage = (probability * 100).toFixed(10); // 保留 10 位小数
+    }
+
+    probabilityDiv.innerHTML = "打出目标字符串的概率为：" + percentage + "%";
+}
         </script>
 </body>
 </html>
