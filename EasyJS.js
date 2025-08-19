@@ -1,3 +1,17 @@
+// EZ JS version 0.1.0 by FH3718
+//==============================
+//make your project more small!
+//==============================
+
+
+
+
+
+
+
+
+
+
 var alt = alert;
 function randomMath(x){
     return Math.ceil(Math.random()* x);

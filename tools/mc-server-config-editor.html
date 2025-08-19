@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC Server配置文件编辑器</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <h1>简易基岩版MC服务器配置文件编辑器</h1><br>
+    <p>By FH3718，制作于2025.7.7，最后更新于2025.7.7<br>
+    此项目旨在让新服主可以零基础编辑自己服务端的配置文件(server.properties)</p><br>
+    服务器名称<input type="text" id="servername"><br>
+    游戏模式<input type="text" id="gamemode">（ survival生存，creative创造，adventure冒险）<br>
+    难度<input type="text" id="difficulty">（"peaceful"和平, "easy"简单, "normal"普通, "hard"困难）<br>
+    允许作弊<input type="checkbox" id="allowcheats"><br>
+    最大玩家数<input type="text" id="maxplayers"><br>
+    在线模式<input type="checkbox" id="onlinemode">(建议开启)<br>
+    白名单模式<input type="checkbox" id="allowlist">(如果你不知道这个选项的作用请勿勾选)<br>
+    服务器端口（IPv4）<input type="text" id="portv4">(默认为19132)<br>
+    服务器端口（IPv6）<input type="text" id="portv6">(默认为19133)<br>
+    渲染距离<input type="text" id="viewdistance">(依据服务器性能填写 建议4-64)<br>
+    模拟距离<input type="text" id="tickdistance">(建议4-16)<br>
+    挂机踢出时间<input type="text" id="AFKtime">(关闭该功能请填写0)<br>
+    服务端使用的最大线程数<input type="text" id="maxthreads">(填写0为无限制)<br>
+    存档名称<input type="text" id="levelname"><br>
+    世界种子<input type="text" id="seed">(只对新创建的世界生效，空留为随机)<br>
+    默认玩家权限<input type="text" id="defPlayerPer">("visitor"访客, "member"成员, "operator"管理员)<br>
+    强制同步材质包<input type="checkbox" id="texturepackRequired">(不知道这个选项的作用请勿勾选)<br><br><br>
+    <button onclick="make()">生成配置文件</button>
+    <script>
+        function make(){
+            var config = "";
+            config += "server-name=" + document.getElementById("servername").value + "\n";
+            config += "gamemode=" + document.getElementById("gamemode").value + "\n";
+            config += "difficulty=" + document.getElementById("difficulty").value + "\n";
+            config += "allow-cheats=" + (document.getElementById("allowcheats").checked ? "true" : "false") + "\n";
+            config += "max-players=" + document.getElementById("maxplayers").value + "\n";
+            config += "online-mode=" + (document.getElementById("onlinemode").checked ? "true" : "false") + "\n";
+            config += "allow-list=" + (document.getElementById("allowlist").checked ? "true" : "false") + "\n";
+            config += "server-portv4=" + document.getElementById("portv4").value + "\n";
+            config += "server-portv6=" + document.getElementById("portv6").value + "\n";
+            config += "view-distance=" + document.getElementById("viewdistance").value + "\n";
+            config += "tick-distance=" + document.getElementById("tickdistance").value + "\n";
+            config += "player-idle-timeout=" + document.getElementById("AFKtime").value + "\n";
+            config += "max-threads=" + document.getElementById("maxthreads").value + "\n";
+            config += "level-name=" + document.getElementById("levelname").value + "\n";
+            config += "level-seed=" + document.getElementById("seed").value + "\n";
+            config += "default-player-permission-level=" + document.getElementById("defPlayerPer").value + "\n";
+            config += "texturepack-required=" + (document.getElementById("texturepackRequired").checked ? "true" : "false") + "\n";
+            var blob = new Blob([config], { type: "text/plain;charset=utf-8" });
+            var link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "server.properties";
+            document.body.appendChild(link);
+            link.click();
+        }
+    </script>
+</body>
+</html>
