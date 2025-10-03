@@ -146,11 +146,11 @@ backdrop-filter: blur(10px);
        
   <script>
     var element = document.getElementById("countdown");
-    var ctDate = 1750515142000;
+    var ctDate = 1843920000000;
     var d = document.getElementById("data");
     var forever = setInterval(() => {
       var left = ctDate - new Date().getTime();
-      element.innerHTML = "<b>距离中考还有</b>" + Math.floor(left / (1000 * 60 * 60 * 24)) + "<b>天</b>" + Math.floor((left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + "<b>小时</b>" + Math.floor((left % (1000 * 60 * 60)) / (1000 * 60)) + "<b>分钟</b>" + Math.floor((left % (1000 * 60)) / 1000) + "<b>秒</b>";
+      element.innerHTML = "<b>距离2028届高考还有</b>" + Math.floor(left / (1000 * 60 * 60 * 24)) + "<b>天</b>" + Math.floor((left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + "<b>小时</b>" + Math.floor((left % (1000 * 60 * 60)) / (1000 * 60)) + "<b>分钟</b>" + Math.floor((left % (1000 * 60)) / 1000) + "<b>秒</b>";
       d.innerHTML = new Date();
     }, 500);
   </script>
