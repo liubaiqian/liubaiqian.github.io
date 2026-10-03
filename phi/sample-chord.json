@@ -1,0 +1,21 @@
+{
+  "formatVersion": 3,
+  "offset": 0.0,
+  "judgeLineList": [
+    {
+      "bpm": 120.0,
+      "speedEvents": [
+        { "startTime": 0, "endTime": 1000000000, "value": 1.0 }
+      ],
+      "judgeLineMoveEvents": [
+        { "startTime": -999999, "endTime": 1000000000, "start": 0.5, "end": 0.5, "start2": 0.5, "end2": 0.5 }
+      ],
+      "notesAbove": [
+        { "type": 1, "time": 64,  "positionX": -2.0, "holdTime": 0.0, "speed": 1.0, "floorPosition": 1.0 },
+        { "type": 1, "time": 64,  "positionX": 2.0,  "holdTime": 0.0, "speed": 1.0, "floorPosition": 1.0 },
+        { "type": 1, "time": 128, "positionX": 0.0,  "holdTime": 0.0, "speed": 1.0, "floorPosition": 2.0 }
+      ],
+      "notesBelow": []
+    }
+  ]
+}

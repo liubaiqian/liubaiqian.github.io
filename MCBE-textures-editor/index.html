@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线材质包制作器</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+    这是什么？这是一个简易材质包制作器<br>
+    How2Use？ 你需要在设备上新建文件夹，并按照以下格式创建文件（夹）
+    <canvas height="128" width="128" id="canvas"></canvas>
+    <script>
+        function downloadCanvas(id) {
+            const canvas = document.getElementById(id);
+            const dataURL = canvas.toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = dataURL;
+            a.download = 'canvas-image.png';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>

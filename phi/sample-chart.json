@@ -1,0 +1,45 @@
+{
+  "formatVersion": 3,
+  "judgeLineList": [
+    {
+      "bpm": 120.0,
+      "speedEvents": [
+        { "startTime": 0, "endTime": 640, "value": 1.0 }
+      ],
+      "judgeLineMoveEvents": [
+        { "startTime": -999999, "endTime": 640, "start": 0.5, "end": 0.5, "start2": 0.5, "end2": 0.5 }
+      ],
+      "notesAbove": [
+        { "type": 1, "time": 64,  "positionX": 0.0,  "holdTime": 0.0, "speed": 1.0, "floorPosition": 1.0 },
+        { "type": 2, "time": 128, "positionX": -2.0, "holdTime": 0.0, "speed": 1.0, "floorPosition": 2.0 },
+        { "type": 4, "time": 192, "positionX": 2.0,  "holdTime": 0.0, "speed": 1.0, "floorPosition": 3.0 },
+        { "type": 3, "time": 256, "positionX": 0.0,  "holdTime": 64,  "speed": 1.0, "floorPosition": 4.0 },
+        { "type": 1, "time": 320, "positionX": -4.0, "holdTime": 0.0, "speed": 1.0, "floorPosition": 5.0 },
+        { "type": 1, "time": 384, "positionX": 4.0,  "holdTime": 0.0, "speed": 1.0, "floorPosition": 6.0 }
+      ],
+      "notesBelow": [
+        { "type": 1, "time": 448, "positionX": 0.0,  "holdTime": 0.0, "speed": 1.0, "floorPosition": 7.0 },
+        { "type": 2, "time": 512, "positionX": 2.0,  "holdTime": 0.0, "speed": 1.0, "floorPosition": 8.0 },
+        { "type": 4, "time": 576, "positionX": -2.0, "holdTime": 0.0, "speed": 2.0, "floorPosition": 9.0 }
+      ]
+    },
+    {
+      "bpm": 150.0,
+      "speedEvents": [
+        { "startTime": 0, "endTime": 640, "value": 1.0 }
+      ],
+      "judgeLineMoveEvents": [
+        { "startTime": -999999, "endTime": 640, "start": 0.5, "end": 0.5, "start2": 0.25, "end2": 0.25 }
+      ],
+      "notesAbove": [
+        { "type": 1, "time": 120, "positionX": -3.0, "holdTime": 0.0, "speed": 1.0, "floorPosition": 1.5 },
+        { "type": 4, "time": 240, "positionX": 3.0,  "holdTime": 0.0, "speed": 1.0, "floorPosition": 3.0 },
+        { "type": 2, "time": 360, "positionX": 0.0,  "holdTime": 0.0, "speed": 1.0, "floorPosition": 4.5 }
+      ],
+      "notesBelow": [
+        { "type": 1, "time": 300, "positionX": 1.5,  "holdTime": 0.0, "speed": 1.0, "floorPosition": 3.75 },
+        { "type": 1, "time": 420, "positionX": -1.5, "holdTime": 0.0, "speed": 1.0, "floorPosition": 5.25 }
+      ]
+    }
+  ]
+}
