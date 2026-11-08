@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>写作业机器人 · 智能解题助手</title>
+  <!-- 全部依赖本地化（vendor/），不依赖外网 CDN，GitHub Pages 国内访问也能正常渲染 -->
+  <link rel="stylesheet" href="vendor/github-dark.min.css" />
+  <link rel="stylesheet" href="vendor/katex.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- 顶栏 -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">📝</div>
+      <div class="brand-text">
+        <h1>写作业机器人</h1>
+        <p>粘贴题目 · AI 秒解 · Markdown 输出</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button id="settingsBtn" class="btn-ghost" title="配置 API">⚙ 设置</button>
+      <button id="newChatBtn" class="btn-ghost" title="清空对话，开始新会话">＋ 新对话</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- 左侧：提问区 -->
+    <section class="panel question-panel">
+      <div class="panel-header">
+        <h2 id="inputTitle">题目输入</h2>
+        <span id="charCount" class="char-count">0 字</span>
+      </div>
+
+      <div class="question-toolbar">
+        <label class="select-group">
+          <span>模式</span>
+          <select id="modeSelect">
+            <option value="solve" selected>解题模式</option>
+            <option value="essay">作文模式</option>
+            <option value="science">理科模式</option>
+          </select>
+        </label>
+        <label class="select-group" id="subjectField">
+          <span>科目</span>
+          <select id="subjectSelect">
+            <option value="auto">自动识别</option>
+            <option value="math">数学</option>
+            <option value="chinese">语文</option>
+            <option value="english">英语</option>
+            <option value="physics">物理</option>
+            <option value="chemistry">化学</option>
+            <option value="biology">生物</option>
+            <option value="programming">编程</option>
+            <option value="other">其他</option>
+          </select>
+        </label>
+        <label class="select-group" id="depthField">
+          <span>深度</span>
+          <select id="depthSelect">
+            <option value="concise">简洁版</option>
+            <option value="normal" selected>标准版</option>
+            <option value="detailed">详解版</option>
+          </select>
+        </label>
+      </div>
+
+      <textarea
+        id="questionInput"
+        class="question-input"
+        placeholder="把题目粘贴到这里…&#10;&#10;支持：&#10;· 文字题目&#10;· LaTeX 公式（如 $E=mc^2$）&#10;· 代码片段（用 ``` 包裹）"
+        rows="10"
+      ></textarea>
+
+      <div class="question-footer">
+        <button id="solveBtn" class="btn-primary">
+          <span class="btn-icon">⚡</span> 开始解题
+        </button>
+        <button id="exampleBtn" class="btn-ghost" type="button">填入示例题目</button>
+      </div>
+    </section>
+
+    <!-- 右侧：结果区 -->
+    <section class="panel answer-panel">
+      <div class="panel-header">
+        <h2 id="outputTitle">解题结果</h2>
+        <span id="wordCount" class="word-count hidden"></span>
+        <div class="answer-toolbar">
+          <button id="printBtn" class="btn-ghost" disabled title="打印当前内容（A4）">🖨 打印</button>
+          <button id="copyMdBtn" class="btn-ghost" disabled title="复制原始文本">复制文本</button>
+          <button id="copyHtmlBtn" class="btn-ghost" disabled title="复制 HTML 渲染结果">复制 HTML</button>
+          <a id="dlMdBtn" class="btn-ghost" download="answer.md" disabled>下载 .md</a>
+        </div>
+      </div>
+
+      <!-- 状态提示 -->
+      <div id="statusBar" class="status-bar hidden">
+        <div class="status-spinner"></div>
+        <span id="statusText">AI 正在思考…</span>
+      </div>
+
+      <!-- 结果渲染区 -->
+      <div id="answerOutput" class="answer-output md-render">
+        <div class="placeholder">
+          <div class="placeholder-icon">🤖</div>
+          <p>在这里粘贴题目，点击「开始解题」</p>
+          <p class="placeholder-sub">答案将以 Markdown 格式渲染，支持公式、代码高亮与表格</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>纯静态页面 · 前端直连 AI API · 数据不出浏览器</span>
+  </footer>
+
+  <!-- ============ 设置弹窗 ============ -->
+  <div id="settingsModal" class="modal-mask hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>API 设置</h3>
+        <button id="closeSettingsBtn" class="modal-close" aria-label="关闭">×</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-hint">
+          配置保存在浏览器 localStorage，不会上传到任何服务器。纯静态部署下 Key 可见于浏览器，
+          请使用个人测试 Key，并注意额度风险。
+        </p>
+
+        <label class="field">
+          <span>接口类型</span>
+          <select id="cfgMode">
+            <option value="openai-compat">OpenAI 兼容（Agnes / DeepSeek / OpenAI…）</option>
+            <option value="anthropic">Anthropic Claude</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>接口地址</span>
+          <input id="cfgEndpoint" type="text" placeholder="https://apihub.agnes-ai.com/v1/chat/completions" />
+        </label>
+
+        <label class="field">
+          <span>模型名称</span>
+          <input id="cfgModel" type="text" list="modelList" placeholder="agnes-3.0-flash" autocomplete="off" />
+          <datalist id="modelList">
+            <option value="agnes-3.0-flash"></option>
+            <option value="agnes-2.5-flash"></option>
+            <option value="agnes-2.5-pro-alpha"></option>
+            <option value="agnes-2.5-pro-beta"></option>
+          </datalist>
+        </label>
+
+        <label class="field">
+          <span>API Key</span>
+          <input id="cfgApiKey" type="password" placeholder="sk-..." autocomplete="off" />
+        </label>
+
+        <label class="field-inline">
+          <input id="cfgStream" type="checkbox" checked />
+          <span>流式输出（逐字显示）</span>
+        </label>
+
+        <div class="modal-actions">
+          <button id="testApiBtn" class="btn-ghost" type="button">测试连接</button>
+          <button id="saveSettingsBtn" class="btn-primary" type="button">保存设置</button>
+        </div>
+        <div id="settingsMsg" class="settings-msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 打印专用稿纸（屏幕上隐藏，@media print 时才出现） -->
+  <div id="printSheet" aria-hidden="true"></div>
+
+  <!-- 依赖：Markdown 解析 + 公式 + 代码高亮 + HTML 净化（全部本地） -->
+  <script src="vendor/marked.min.js"></script>
+  <script src="vendor/purify.min.js"></script>
+  <script src="vendor/highlight.min.js"></script>
+  <script src="vendor/katex.min.js"></script>
+  <script src="vendor/katex-auto-render.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

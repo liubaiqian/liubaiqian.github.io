@@ -1,0 +1,817 @@
+:root {
+  --bg: #0f1120;
+  --bg-grid: rgba(255, 255, 255, 0.035);
+  --panel: rgba(22, 25, 48, 0.82);
+  --panel-border: rgba(120, 140, 255, 0.18);
+  --text: #e8eaf6;
+  --text-dim: #9aa3c7;
+  --accent: #6c8cff;
+  --accent-strong: #8fa4ff;
+  --ok: #4ade80;
+  --danger: #ff6b6b;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 背景网格 */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--bg-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+  background-size: 42px 42px;
+  z-index: 0;
+}
+
+/* 顶栏 */
+.topbar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: rgba(15, 17, 32, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  font-size: 30px;
+  filter: drop-shadow(0 0 10px rgba(108, 140, 255, 0.5));
+}
+
+.brand-text h1 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #a5b4ff, #e8eaf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-text p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 主布局 */
+.layout {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(360px, 42%) 1fr;
+  gap: 18px;
+  padding: 18px 28px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .topbar {
+    padding: 12px 16px;
+  }
+
+  .brand-text p {
+    display: none;
+  }
+}
+
+/* 桌面端：整屏固定高度，两个面板各自滚动 */
+@media (min-width: 901px) {
+  body {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .layout {
+    min-height: 0;
+  }
+
+  .panel {
+    min-height: 0;
+  }
+
+  .question-input {
+    min-height: 120px;
+  }
+
+  .answer-output {
+    min-height: 0;
+    max-height: none;
+  }
+}
+
+/* 面板通用 */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  backdrop-filter: blur(8px);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.char-count {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-left: auto;
+}
+
+/* 工具条 */
+.question-toolbar {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.select-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.select-group select {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.word-count {
+  font-size: 12px;
+  color: var(--ok);
+  margin-left: 10px;
+  white-space: nowrap;
+}
+
+/* 输入框 */
+.question-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 14px;
+  resize: vertical;
+  min-height: 200px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.question-input:focus {
+  border-color: var(--accent);
+}
+
+.question-input::placeholder {
+  color: rgba(154, 163, 199, 0.55);
+  white-space: pre-line;
+}
+
+.question-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* 按钮 */
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #6c8cff, #8f6cff);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 18px rgba(108, 140, 255, 0.35);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(108, 140, 255, 0.45);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-icon {
+  font-size: 15px;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid var(--panel-border);
+  border-radius: 9px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  color: var(--accent-strong);
+  border-color: var(--accent);
+  background: rgba(108, 140, 255, 0.08);
+}
+
+.btn-ghost:disabled,
+.btn-ghost.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 结果区工具条 */
+.answer-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+/* 状态条 */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(108, 140, 255, 0.1);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: var(--accent-strong);
+}
+
+.status-bar.hidden {
+  display: none;
+}
+
+.status-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(143, 164, 255, 0.3);
+  border-top-color: var(--accent-strong);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Markdown 渲染区 */
+.answer-output {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 70vh;
+  padding: 4px 8px 4px 4px;
+  font-size: 14.5px;
+  line-height: 1.8;
+}
+
+.placeholder {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-dim);
+}
+
+.placeholder-icon {
+  font-size: 52px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 18px rgba(108, 140, 255, 0.4));
+}
+
+.placeholder p {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.placeholder-sub {
+  font-size: 12.5px;
+  opacity: 0.7;
+}
+
+/* Markdown 内容样式 */
+.md-render {
+  word-break: break-word;
+}
+
+.md-render h1,
+.md-render h2,
+.md-render h3 {
+  color: #cdd6ff;
+  margin: 1.2em 0 0.6em;
+  border-bottom: 1px solid rgba(120, 140, 255, 0.15);
+  padding-bottom: 0.3em;
+}
+
+.md-render h1 {
+  font-size: 22px;
+}
+
+.md-render h2 {
+  font-size: 18px;
+}
+
+.md-render h3 {
+  font-size: 15.5px;
+}
+
+.md-render p {
+  margin: 0.7em 0;
+}
+
+.md-render ul,
+.md-render ol {
+  padding-left: 1.4em;
+}
+
+.md-render li {
+  margin: 0.35em 0;
+}
+
+.md-render code {
+  background: rgba(255, 255, 255, 0.07);
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.md-render pre {
+  background: #1a1d35;
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.md-render pre code {
+  background: none;
+  padding: 0;
+}
+
+.md-render blockquote {
+  margin: 1em 0;
+  padding: 8px 16px;
+  border-left: 3px solid var(--accent);
+  background: rgba(108, 140, 255, 0.07);
+  border-radius: 0 8px 8px 0;
+  color: var(--text-dim);
+}
+
+.md-render table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 13.5px;
+}
+
+.md-render th,
+.md-render td {
+  border: 1px solid var(--panel-border);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.md-render th {
+  background: rgba(108, 140, 255, 0.1);
+  color: var(--accent-strong);
+}
+
+.md-render a {
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
+.md-render a:hover {
+  text-decoration: underline;
+}
+
+.md-render img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.md-render hr {
+  border: none;
+  border-top: 1px solid var(--panel-border);
+  margin: 1.4em 0;
+}
+
+/* KaTeX */
+.md-render .katex {
+  font-size: 1.05em;
+}
+
+/* 作文模式：纯文本输出，保留全角空格缩进 */
+.answer-output.plain-text {
+  font-family: "Songti SC", "SimSun", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  font-size: 15.5px;
+  line-height: 2.05;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #e6e9ff;
+  letter-spacing: 0.01em;
+}
+
+/* 错误提示 */
+.md-render .answer-error {
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: #ffb3b3;
+}
+
+.md-render .answer-error strong {
+  color: var(--danger);
+}
+
+/* 底部 */
+.footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 14px;
+  font-size: 12px;
+  color: var(--text-dim);
+  opacity: 0.7;
+}
+
+/* ============ 设置弹窗 ============ */
+.hidden {
+  display: none !important;
+}
+
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(5, 6, 15, 0.72);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  width: min(520px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #171a30;
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.modal-close:hover {
+  color: var(--text);
+}
+
+.modal-body {
+  padding: 18px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal-hint {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--text-dim);
+  background: rgba(108, 140, 255, 0.07);
+  border: 1px solid var(--panel-border);
+  border-radius: 9px;
+  padding: 10px 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+
+.field input,
+.field select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--panel-border);
+  border-radius: 9px;
+  padding: 10px 12px;
+  font-size: 13.5px;
+  color: var(--text);
+  outline: none;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--accent);
+}
+
+.field-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.field-inline input {
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.settings-msg {
+  font-size: 12.5px;
+  min-height: 18px;
+  color: var(--text-dim);
+}
+
+.settings-msg.ok {
+  color: var(--ok);
+}
+
+.settings-msg.err {
+  color: var(--danger);
+}
+
+/* ============ 打印 ============ */
+#printSheet {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 20mm 22mm;
+  }
+
+  html,
+  body {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    color: #000 !important;
+    display: block !important;
+  }
+
+  /* 屏幕上的一切都不打印 */
+  .bg-grid,
+  .topbar,
+  .footer,
+  .question-panel,
+  .panel-header,
+  .answer-toolbar,
+  #statusBar,
+  .modal-mask {
+    display: none !important;
+  }
+
+  .layout {
+    display: block !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .panel {
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+  }
+
+  #answerOutput,
+  #answerOutput.plain-text {
+    display: none !important;
+  }
+
+  #printSheet {
+    display: block !important;
+    color: #000;
+    background: #fff;
+    font-family: "Songti SC", "SimSun", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+    font-size: 12pt;
+    line-height: 1.9;
+  }
+
+  #printSheet .print-title {
+    text-align: center;
+    text-indent: 0;
+    font-size: 15pt;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin: 0 0 18pt;
+  }
+
+  #printSheet p {
+    text-indent: 2em;
+    margin: 0;
+    text-align: justify;
+  }
+
+  /* 改进建议附录 */
+  #printSheet .print-appendix {
+    margin-top: 14pt;
+    padding-top: 8pt;
+    border-top: 1px solid #bbb;
+    font-size: 10.5pt;
+    line-height: 1.7;
+    color: #333;
+  }
+
+  #printSheet .print-appendix-title {
+    text-indent: 0;
+    font-weight: 700;
+    margin-bottom: 4pt;
+    letter-spacing: 0.05em;
+  }
+
+  #printSheet .print-appendix p {
+    text-indent: 0;
+    margin: 0 0 3pt;
+  }
+
+  /* 非作文模式（解题/理科）打印渲染后的内容 */
+  #printSheet .print-md {
+    font-family: "Songti SC", "SimSun", serif;
+    font-size: 11.5pt;
+    line-height: 1.75;
+  }
+
+  #printSheet .print-md h1,
+  #printSheet .print-md h2,
+  #printSheet .print-md h3 {
+    color: #000;
+    border: none;
+    margin: 12pt 0 6pt;
+  }
+
+  #printSheet .print-md p,
+  #printSheet .print-md li {
+    text-indent: 0;
+    margin: 0 0 4pt;
+  }
+
+  #printSheet .print-md ul,
+  #printSheet .print-md ol {
+    padding-left: 1.6em;
+  }
+
+  #printSheet .print-md pre {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 6pt 8pt;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-size: 9.5pt;
+  }
+
+  #printSheet .print-md table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 10pt;
+  }
+
+  #printSheet .print-md th,
+  #printSheet .print-md td {
+    border: 1px solid #999;
+    padding: 3pt 5pt;
+  }
+
+  #printSheet .print-md blockquote {
+    border-left: 2pt solid #999;
+    padding-left: 8pt;
+    color: #333;
+    background: none;
+    margin: 6pt 0;
+  }
+}
+
